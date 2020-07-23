@@ -1,0 +1,64 @@
+_schema-version: "3.2"
+ID: tutorial2
+version: 0.0.1
+modules:
+- name: tutorial2-approuter
+  type: approuter.nodejs
+  path: tutorial2-approuter
+  requires:
+  - name: tutorial2_html_repo_runtime
+  - name: uaa_tutorial2
+  - name: dest_tutorial2
+  parameters:
+    disk-quota: 256M
+    memory: 256M
+- name: tutorial2_ui_deployer
+  type: com.sap.application.content
+  path: .
+  requires:
+  - name: tutorial2_html_repo_host
+    parameters:
+      content-target: true
+  build-parameters:
+    build-result: resources
+    requires:
+    - artifacts:
+      - webapp2-content.zip
+      name: webapp2
+      target-path: resources/
+- name: webapp2
+  type: html5
+  path: webapp2
+  build-parameters:
+    builder: custom
+    commands:
+    - npm run build
+    supported-platforms: []
+resources:
+- name: tutorial2_html_repo_runtime
+  type: org.cloudfoundry.managed-service
+  parameters:
+    service: html5-apps-repo
+    service-plan: app-runtime
+- name: tutorial2_html_repo_host
+  type: org.cloudfoundry.managed-service
+  parameters:
+    service: html5-apps-repo
+    service-plan: app-host
+- name: uaa_tutorial2
+  type: org.cloudfoundry.managed-service
+  parameters:
+    path: ./xs-security.json
+    service: xsuaa
+    service-name: tutorial2-xsuaa-service
+    service-plan: application
+- name: dest_tutorial2
+  type: org.cloudfoundry.managed-service
+  parameters:
+    service: destination
+    service-plan: lite
+build-parameters:
+  before-all:
+  - builder: custom
+    commands:
+    - npm install

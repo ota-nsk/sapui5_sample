@@ -1,0 +1,23 @@
+<mvc:View controllerName="sap.cp.webapp2.controller.List"
+	xmlns:mvc="sap.ui.core.mvc" displayBlock="true"
+	xmlns="sap.m">
+	<Page id="listPage" title="{i18n>ListTitle}">
+		<subHeader>
+			<Bar>
+				<contentLeft>
+					<SearchField search="handleSearch"/>
+				</contentLeft>
+			</Bar>
+		</subHeader>
+		<List id="list" items="{/Products}">
+			<ObjectListItem type="Navigation" press="handleListItemPress" title="{ProductName}" number="{= ((${UnitPrice} * 100) / 100).toFixed(2) }" numberUnit="{i18n>Currency}">
+				<attributes>
+					<ObjectAttribute text="{QuantityPerUnit}"/>
+				</attributes>
+				<firstStatus>
+					<ObjectStatus  text="{= ${Discontinued} ? ${i18n>Discontinued} : ${i18n>Available} }"  state="{= ${Discontinued}? 'Error' : 'Success' }"/>
+				</firstStatus>
+			</ObjectListItem>
+		</List>
+	</Page>
+</mvc:View>

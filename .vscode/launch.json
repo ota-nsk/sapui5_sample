@@ -1,0 +1,23 @@
+{
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "name": "Run tutorial2-webapp2",
+      "type": "node",
+      "request": "launch",
+      "program": "${workspaceFolder}/tutorial2-approuter/node_modules/@sap/html5-repo-mock/index.js",
+      "args": [
+        "--standalone",
+        "/sapcpwebapp2/index.html"
+      ],
+      "cwd": "${workspaceFolder}/webapp2",
+      "env": {
+        "PORT": "6004",
+        "MOCK_LOOKUP_DIRS": "[\"webapp\"]",
+        "run.config": "{\"handlerId\":\"ui5_run_config_handler_id\",\"runnableId\":\"/home/user/projects/tutorial2/webapp2\"}"
+      },
+      "envFile": "${workspaceFolder}/webapp2/.env1",
+      "preLaunchTask": "Build tutorial2"
+    }
+  ]
+}
